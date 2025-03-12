@@ -1,0 +1,23 @@
+﻿version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourStrongPassword!"
+  
+  api:
+    build:
+      context: .
+      dockerfile: ProjectManagementSystem.API/Dockerfile
+    container_name: project-management-api
+    ports:
+      - "5000:5000"
+    depends_on:
+      - sqlserver
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=ProjectManagementDB;User Id=sa;Password=YourStrongPassword!;TrustServerCertificate=True;"

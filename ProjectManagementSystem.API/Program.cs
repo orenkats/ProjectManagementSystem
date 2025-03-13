@@ -42,6 +42,10 @@ builder.Services.AddSingleton<IAmazonCognitoClient>(provider =>
         awsOptions.AWSSecretAccessKey,
         awsOptions.Region));
 
+//✅ Add DbContext 
+builder.Services.AddDbContext<ApplicationContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 //Register Services & Repositories
 builder.Services.AddSingleton<IAuthManager, AuthManager>();
 builder.Services.AddScoped<ApplicationContext>();

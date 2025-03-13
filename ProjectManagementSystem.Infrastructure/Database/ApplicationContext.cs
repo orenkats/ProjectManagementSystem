@@ -7,12 +7,9 @@ namespace ProjectManagementSystem.Infrastructure.Database
         public DbSet<ProjectEntity> Projects { get; set; }
         public DbSet<TaskEntity> Tasks { get; set; }
 
-        public ApplicationContext() { }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options)
+            : base(options)
         {
-            var connectionString = "Server=sqlserver,1433;Database=ProjectManagementDB;User Id=sa;Password=YourStrongPassword!;TrustServerCertificate=True;";
-            optionsBuilder.UseSqlServer(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
